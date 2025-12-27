@@ -100,7 +100,7 @@ Austin Ziegler created TableauSocialExtension.
 [credo]: https://github.com/rrrene/credo
 [dco]: licences/dco.txt
 [exunit]: https://hexdocs.pm/ex_unit/ExUnit.html
-[issues]: https://github.com/halostatue/capture_logger/issues
+[issues]: https://github.com/halostatue/tableau_social_extension/issues
 [quokka]: https://github.com/emkguts/quokka
 [tpope-qcm]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 [trailers1]: https://git-scm.com/docs/git-interpret-trailers

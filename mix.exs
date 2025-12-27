@@ -3,7 +3,7 @@ defmodule TableauSocialExtension.MixProject do
 
   @app :tableau_social_extension
   @project_url "https://github.com/halostatue/tableau_social_extension"
-  @version "1.0.0"
+  @version "1.0.1"
 
   def project do
     [
@@ -12,7 +12,7 @@ defmodule TableauSocialExtension.MixProject do
       version: @version,
       source_url: @project_url,
       name: "TableauSocialExtension",
-      elixir: "~> 1.15",
+      elixir: "~> 1.18",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps(),

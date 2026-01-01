@@ -102,7 +102,7 @@ Austin Ziegler created TableauSocialExtension.
 [exunit]: https://hexdocs.pm/ex_unit/ExUnit.html
 [issues]: https://github.com/halostatue/tableau_social_extension/issues
 [quokka]: https://github.com/emkguts/quokka
-[tpope-qcm]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
+[tpope-qcm]: https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 [trailers1]: https://git-scm.com/docs/git-interpret-trailers
 [trailers2]: https://git-scm.com/docs/git-commit#Documentation/git-commit.txt---trailerlttokengtltvaluegt
 [kiro]: https://kiro.dev

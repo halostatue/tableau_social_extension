@@ -29,7 +29,7 @@ jobs:
             otp: '27'
             os: ubuntu-22.04
           - elixir: '1.19'
-            otp: '28.1'
+            otp: '28.3'
             os: ubuntu-22.04
             check_formatted: true
             warnings_as_errors: true

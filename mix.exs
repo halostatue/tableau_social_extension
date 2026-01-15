@@ -21,7 +21,7 @@ defmodule TableauSocialExtension.MixProject do
       test_coverage: test_coverage(),
       elixirc_paths: elixirc_paths(Mix.env()),
       dialyzer: [
-        plt_add_apps: [:mix],
+        plt_add_apps: [:mix, :ex_unit],
         plt_local_path: "priv/plts/project.plt",
         plt_core_path: "priv/plts/core.plt"
       ]

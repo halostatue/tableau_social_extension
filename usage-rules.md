@@ -29,9 +29,9 @@ config :tableau, TableauSocialExtension,
     # Numeric ID with username
     stack_overflow: "12345/username",
     
-    # Multiple accounts per platform
-    github_work: "work-username",
-    mastodon_alt: "alt@other.instance"
+    # Multiple accounts per platform (as list)
+    github: ["personal-username", "work-username"],
+    mastodon: ["user@instance.social", "alt@other.instance"]
   ],
   css_prefix: "social",  # optional, default: "social"
   labels: %{             # optional, for social-block display
@@ -71,25 +71,51 @@ Generates definition list with all configured accounts. Each platform gets:
 <!-- Uses specific account identifier -->
 <a social-github="different-user">Text</a>
 
-<!-- Uses alternate account from config (github_work) -->
-<a social-github-work>Work Profile</a>
+<!-- For platforms with lookup keys (e.g., Stack Overflow with id/username) -->
+<a social-stack-overflow-id="12345">By ID</a>
+<a social-stack-overflow-username="alice">By Username</a>
 ```
 
 **Important**: Attribute value is the account identifier itself, not a config
 lookup key. `social-github="user"` uses "user" as the GitHub username directly.
+
+For platforms with multiple parsed fields (like Stack Overflow's `id` and
+`username`), you can use lookup keys to select from configured accounts:
+`social-{platform}-{key}="{value}"`.
 
 ## Frontmatter Overrides
 
 ```yaml
 ---
 title: About
-social:
+social_accounts:
   github: page-specific-username
   mastodon: different@instance.social
 ---
 ```
 
-Frontmatter merges with site config. Only specified platforms are overridden.
+Frontmatter overrides site config per platform. Unspecified platforms use site
+config. Specified platforms **replace** site config by default.
+
+### Append/Prepend Syntax
+
+To merge with site config instead of replacing:
+
+```yaml
+social_accounts:
+  github[append]: [additional-account] # Adds to end
+  github[prepend]: [priority-account] # Adds to beginning
+```
+
+If an account already exists in the list, it's moved to the new position.
+
+### Special Directives
+
+- `[include]: [platform1, platform2]` - Limit which platforms are available
+- `[order]: [platform1, platform2]` - Control platform order in social blocks
+
+See [Platform Reference](guides/platform-reference.md) for complete frontmatter
+documentation.
 
 ## Generated HTML Structure
 
@@ -141,8 +167,10 @@ All classes use configurable prefix (default `"social"`):
 2. **Invalid account format**: Each platform requires specific format (username,
    email-style, numeric ID, etc.)
 
-3. **Modifier syntax**: `<a social-github-work>` requires `github_work` key in
-   config, not `github` with modifier
+3. **Lookup keys**: Platforms with multiple parsed fields (Stack Overflow,
+   Reddit, Fediverse platforms) support lookup keys like
+   `social-{platform}-{key}="{value}"`. Simple platforms like GitHub only have
+   `username` as a key.
 
 4. **Empty social blocks**: `<dl social-block>` with no configured accounts
    generates empty `<dl>` element

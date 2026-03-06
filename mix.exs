@@ -78,18 +78,18 @@ defmodule TableauSocialExtension.MixProject do
       main: "TableauSocialExtension",
       extras: [
         "README.md",
-        "CONTRIBUTING.md": [filename: "CONTRIBUTING.md", title: "Contributing"],
-        "CODE_OF_CONDUCT.md": [filename: "CODE_OF_CONDUCT.md", title: "Code of Conduct"],
-        "CHANGELOG.md": [filename: "CHANGELOG.md", title: "CHANGELOG"],
-        "guides/platform-reference.md": [filename: "platform-reference.md", title: "Platform Reference"],
-        "guides/styling.md": [filename: "styling.md", title: "Styling"],
-        "LICENCE.md": [filename: "LICENCE.md", title: "Licence"],
+        "CONTRIBUTING.md": [filename: "CONTRIBUTING", title: "Contributing"],
+        "CODE_OF_CONDUCT.md": [filename: "CODE_OF_CONDUCT", title: "Code of Conduct"],
+        "CHANGELOG.md": [filename: "CHANGELOG", title: "CHANGELOG"],
+        "guides/platform-reference.md": [filename: "platform-reference", title: "Platform Reference"],
+        "guides/styling.md": [filename: "styling", title: "Styling"],
+        "LICENCE.md": [filename: "LICENCE", title: "Licence"],
         "licences/APACHE-2.0.txt": [
           filename: "APACHE-2.0.txt",
           title: "Apache License, version 2.0"
         ],
         "licences/dco.txt": [filename: "dco.txt", title: "Developer Certificate of Origin"],
-        "usage-rules.md": [filename: "usage-rules.md", title: "Agent Usage Rules"]
+        "usage-rules.md": [filename: "usage-rules", title: "Agent Usage Rules"]
       ],
       source_ref: "v#{@version}",
       source_url: @project_url,

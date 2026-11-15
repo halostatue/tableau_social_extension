@@ -1,13 +1,12 @@
 defmodule TableauSocialExtension.MixProject do
   use Mix.Project
 
-  @app :tableau_social_extension
   @project_url "https://github.com/halostatue/tableau_social_extension"
   @version "1.0.2"
 
   def project do
     [
-      app: @app,
+      app: :tableau_social_extension,
       description: "A Social Media Account Extension for Tableau",
       version: @version,
       source_url: @project_url,
@@ -24,14 +23,15 @@ defmodule TableauSocialExtension.MixProject do
         plt_add_apps: [:mix, :ex_unit],
         plt_local_path: "priv/plts/project.plt",
         plt_core_path: "priv/plts/core.plt"
+      ],
+      hex: [
+        ignore_advisories: hex_ignore_advisories()
       ]
     ]
   end
 
   def application do
-    [
-      extra_applications: [:logger]
-    ]
+    [extra_applications: [:logger]]
   end
 
   def cli do
@@ -53,7 +53,7 @@ defmodule TableauSocialExtension.MixProject do
     [
       maintainers: "Austin Ziegler",
       licenses: ["Apache-2.0"],
-      files: ~w(lib .formatter.exs mix.exs *.md),
+      files: ~w(lib .formatter.exs mix.exs *.md licences),
       links: %{
         "Source" => @project_url,
         "Issues" => @project_url <> "/issues"
@@ -64,18 +64,22 @@ defmodule TableauSocialExtension.MixProject do
   defp deps do
     [
       {:floki, "~> 0.36"},
-      {:tableau, "~> 0.27"},
+      {:tableau, "~> 0.30", optional: true},
+      {:mdex, "~> 0.11 and >= 0.11.1", optional: true},
+      {:castore, "~> 1.0", optional: true},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.18", only: [:test]},
       {:ex_doc, "~> 0.29", only: [:dev, :test], runtime: false},
-      {:quokka, "~> 2.6", only: [:dev, :test], runtime: false}
+      {:excoveralls, "~> 0.18", only: [:test]},
+      {:quokka, "~> 2.6", only: [:dev, :test], runtime: false},
+      {:sobelow, "~> 0.14", only: [:dev, :test]},
+      {:usage_rules, "~> 1.3", only: [:dev, :test]}
     ]
   end
 
   defp docs do
     [
-      main: "TableauSocialExtension",
+      main: "readme",
       extras: [
         "README.md",
         "CONTRIBUTING.md": [filename: "CONTRIBUTING", title: "Contributing"],
@@ -84,22 +88,31 @@ defmodule TableauSocialExtension.MixProject do
         "guides/platform-reference.md": [filename: "platform-reference", title: "Platform Reference"],
         "guides/styling.md": [filename: "styling", title: "Styling"],
         "LICENCE.md": [filename: "LICENCE", title: "Licence"],
-        "licences/APACHE-2.0.txt": [
-          filename: "APACHE-2.0.txt",
-          title: "Apache License, version 2.0"
-        ],
-        "licences/dco.txt": [filename: "dco.txt", title: "Developer Certificate of Origin"],
+        "licences/APACHE-2.0.txt": [filename: "APACHE-2.0", title: "Apache License, version 2.0"],
+        "licences/dco.txt": [filename: "dco", title: "Developer Certificate of Origin"],
         "usage-rules.md": [filename: "usage-rules", title: "Agent Usage Rules"]
       ],
       source_ref: "v#{@version}",
       source_url: @project_url,
-      canonical: "https://hexdocs.pm/#{@app}"
+      canonical: "https://tableau-social-extension.hexdocs.pm/"
     ]
   end
 
   defp test_coverage do
     [
       tool: ExCoveralls
+    ]
+  end
+
+  defp hex_ignore_advisories do
+    [
+      # These advisories are ignored because they don't affect this project.
+      "EEF-CVE-2026-54888",
+      "EEF-CVE-2026-53429",
+      "EEF-CVE-2026-53428",
+      "EEF-CVE-2026-54889",
+      "EEF-CVE-2026-53426",
+      "EEF-CVE-2026-53427"
     ]
   end
 end

@@ -1,5 +1,11 @@
 # TableauSocialExtension Changelog
 
+## NEXT / YYYY-MM-DD
+
+- Fixed a compile warning under Elixir 1.20.
+
+- Added my new AI policy document.
+
 ## 1.0.2 / 2026-01-27
 
 - Added [usage rules](./usage-rules.md) for use with [`usage_rules`][urules].

@@ -20,7 +20,6 @@ jobs:
     env:
       LANG: en_US.UTF-8
       LC_CTYPE: en_US.UTF-8
-      MIX_ENV: test
 
     strategy:
       fail-fast: false
@@ -30,13 +29,12 @@ jobs:
             otp: '27'
             os: ubuntu-22.04
           - elixir: '1.19'
-            otp: '28.3'
+            otp: '28.5'
             os: ubuntu-22.04
-            check_formatted: true
-            warnings_as_errors: true
-            dialyzer: true
-            credo: true
-            coveralls: true
+          - elixir: '1.20'
+            otp: '29'
+            os: ubuntu-24.04
+            quality: true
 
     runs-on: ${{ matrix.os }}
 
@@ -45,7 +43,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@8d3c67de8e2fe68ef647c8db1e6a09f647780f40 # v2.19.0
+        uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -55,17 +53,17 @@ jobs:
             release-assets.githubusercontent.com:443
             repo.hex.pm:443
 
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - uses: erlef/setup-beam@fc68ffb90438ef2936bbb3251622353b3dcb2f93 # v1.24.0
+      - uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1.24.1
         id: install
         with:
           otp-version: ${{ matrix.otp }}
           elixir-version: ${{ matrix.elixir }}
 
-      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: builds@elixir-${{ steps.install.outputs.elixir-version }}-otp-${{ steps.install.outputs.otp-version }}-mix-${{ hashFiles('mix.lock') }}
           path: |
@@ -74,27 +72,34 @@ jobs:
 
       - run: mix 'do' deps.get, deps.compile
 
+      - run: mix hex.audit
+        if: matrix.quality
+
+      - run: mix sobelow --config --format github
+        if: matrix.quality
+
       - run: mix format --check-formatted
-        if: matrix.check_formatted
+        if: matrix.quality
 
       - run: mix compile --warnings-as-errors
-        if: matrix.warnings_as_errors
-
-      - run: mix compile
-        if: ${{ !matrix.warnings_as_errors }}
+        if: matrix.quality
 
       - run: mix coveralls.github
-        if: ${{ matrix.coveralls }}
+        if: ${{ matrix.quality }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
       - run: mix test
-        if: ${{ !matrix.coveralls }}
+        if: ${{ !matrix.quality }}
 
       - run: mix credo --strict
-        if: matrix.credo
+        if: matrix.quality
 
-      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+      - name: Validate usage rules
+        run: mix usage_rules.validate usage-rules.md guides/*.md
+        if: matrix.quality
+
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: plts@elixir-${{ steps.install.outputs.elixir-version }}-otp-${{ steps.install.outputs.otp-version }}-mix-${{ hashFiles('mix.lock') }}
           path: |
@@ -103,4 +108,4 @@ jobs:
             plts@elixir-${{ steps.install.outputs.elixir-version }}-otp-${{ steps.install.outputs.otp-version }}-mix-
 
       - run: mix dialyzer --format github
-        if: matrix.dialyzer
+        if: matrix.quality

@@ -4,8 +4,6 @@ defmodule TableauSocialExtension.SocialLink do
   alias TableauSocialExtension.Platform
   alias TableauSocialExtension.Render
 
-  require Logger
-
   def process(attrs, children, config) do
     case resolve_social_platform(attrs, config) do
       {:ok, platform, value} ->

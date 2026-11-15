@@ -13,8 +13,8 @@ configuration and content frontmatter.
 ## Overview
 
 The Social Extension processes `<dl social-block>` and `<a social-{platform}>`
-tags in your HTML content and replaces them with properly formatted social media
-links.
+tags in your HTML content and replaces them with properly formatted social
+media links.
 
 ## Configuration
 
@@ -34,8 +34,8 @@ For advanced configuration, see the
 
 ## Installation
 
-TableauSocialExtension can be installed by adding `tableau_social_extension` to
-your list of dependencies in `mix.exs`:
+TableauSocialExtension can be installed by adding `tableau_social_extension`
+to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do

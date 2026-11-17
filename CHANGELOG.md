@@ -1,10 +1,12 @@
 # TableauSocialExtension Changelog
 
-## NEXT / YYYY-MM-DD
+## 1.0.3 / 2026-11-16
 
 - Fixed a compile warning under Elixir 1.20.
 
-- Added my new AI policy document.
+- Added my new [AI policy document](./AI_POLICY.md).
+
+- Added workflow identity releases.
 
 ## 1.0.2 / 2026-01-27
 

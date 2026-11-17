@@ -2,7 +2,7 @@ defmodule TableauSocialExtension.MixProject do
   use Mix.Project
 
   @project_url "https://github.com/halostatue/tableau_social_extension"
-  @version "1.0.2"
+  @version "1.0.3"
 
   def project do
     [
